@@ -5,13 +5,13 @@
 #
 from termcolor import cprint
 
-from constants import Menu
+from constants import Menu as m
 
 
 def menu_call():
     cprint(
-        Menu.WELCOME_MSG.value,
-        Menu.COLOR_MSG.value,
+        m.WELCOME_MSG.value,
+        m.COLOR_MSG.value,
         attrs=["bold"],
     )
 
