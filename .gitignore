@@ -196,3 +196,6 @@ cython_debug/
 
 # file to make some notes
 notes.txt
+
+# vscode settings
+settings.json
