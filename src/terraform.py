@@ -12,7 +12,7 @@ captured_plan_output_file = os.path.join(
 )
 tf_plan_output_file = f"{terraform_dir}terraform_plan.tfplan"
 
-# using try and except, here creates terraform sintaxe check using subprocess
+# using try and except, here creates terraform syntax check using subprocess
 try:
     result = subprocess.run(
         ["terraform", "validate", "-no-color"],
@@ -21,10 +21,10 @@ try:
         capture_output=True,
     )
     cprint(
-        "✅ Terraform sintaxe check completed successfully.\n", attrs=["bold"]
+        "✅ Terraform syntax check completed successfully.\n", attrs=["bold"]
     )
 except subprocess.CalledProcessError as e:
-    cprint(f"🚨 Terraform sintaxe check failed. Error: {e}", attrs=["bold"])
+    cprint(f"🚨 Terraform syntax check failed. Error: {e}", attrs=["bold"])
     cprint(e.stderr.decode(), "red")
     exit(1)
 
