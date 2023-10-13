@@ -1,22 +1,20 @@
 import os
 import re
 import subprocess
+import sys
 
 from prettytable import PrettyTable, prettytable
 from termcolor import colored, cprint
 
-# Define the paths to the Terraform files and output
-terraform_dir = "/Users/fsavoia/Dev/terra-friend/terraform-samples/"
-captured_plan_output_file = os.path.join(
-    terraform_dir, "terraform_plan_output.txt"
-)
-tf_plan_output_file = f"{terraform_dir}terraform_plan.tfplan"
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+from constants import TerraformCommands as tf
+from constants import TerraformSettings as ts
 
 # using try and except, here creates terraform syntax check using subprocess
 try:
     result = subprocess.run(
-        ["terraform", "validate", "-no-color"],
-        cwd=terraform_dir,
+        tf.VALIDATE.value.split(" "),
+        cwd=ts.TERRAFORM_DIR.value,
         check=True,
         capture_output=True,
     )
@@ -29,8 +27,8 @@ except subprocess.CalledProcessError as e:
 # using try and except, here creates terraform init using subprocess
 try:
     result = subprocess.run(
-        ["terraform", "init", "-no-color"],
-        cwd=terraform_dir,
+        tf.INIT.value.split(" "),
+        cwd=ts.TERRAFORM_DIR.value,
         check=True,
         capture_output=True,
     )
@@ -43,13 +41,13 @@ except subprocess.CalledProcessError as e:
 # Run the Terraform plan command and save the output to a file
 try:
     result = subprocess.run(
-        ["terraform", "plan", "-no-color", "-out", tf_plan_output_file],
-        cwd=terraform_dir,
+        tf.PLAN.value.split(" "),
+        cwd=ts.TERRAFORM_DIR.value,
         capture_output=True,
         check=True,
     )
 
-    with open(captured_plan_output_file, "w") as output_file:
+    with open(ts.CAPTURED_PLAN_OUTPUT_FILE.value, "w") as output_file:
         output_file.write(result.stdout.decode())
 
     cprint("✅ Terraform plan completed successfully.\n")
@@ -121,9 +119,9 @@ def parse_terraform_plan(captured_plan_output_file: str) -> None:
     print(detail_table)
 
 
-parse_terraform_plan(captured_plan_output_file)
+parse_terraform_plan(ts.CAPTURED_PLAN_OUTPUT_FILE.value)
 
 # removing the plan file
-os.remove(tf_plan_output_file)
+os.remove(ts.TF_PLAN_OUTPUT_FILE.value)
 # removing the captured plan output file
-os.remove(captured_plan_output_file)
+os.remove(ts.CAPTURED_PLAN_OUTPUT_FILE.value)
