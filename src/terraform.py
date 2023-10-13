@@ -21,9 +21,7 @@ try:
         capture_output=True,
     )
     cprint(
-        "✅ Terraform sintaxe check completed successfully.\n",
-        "green",
-        attrs=["bold"],
+        "✅ Terraform sintaxe check completed successfully.\n", attrs=["bold"]
     )
 except subprocess.CalledProcessError as e:
     cprint(f"🚨 Terraform sintaxe check failed. Error: {e}", attrs=["bold"])
@@ -38,9 +36,7 @@ try:
         check=True,
         capture_output=True,
     )
-    cprint(
-        "✅ Terraform init completed successfully.\n", "green", attrs=["bold"]
-    )
+    cprint("✅ Terraform init completed successfully.\n", attrs=["bold"])
 except subprocess.CalledProcessError as e:
     cprint(f"🚨 Terraform init failed. Error: {e}i", attrs=["bold"])
     cprint(e.stderr.decode(), "red")
@@ -58,9 +54,7 @@ try:
     with open(captured_plan_output_file, "w") as output_file:
         output_file.write(result.stdout.decode())
 
-    cprint(
-        "✅ Terraform plan completed successfully.\n", "green", attrs=["bold"]
-    )
+    cprint("✅ Terraform plan completed successfully.\n", attrs=["bold"])
 except subprocess.CalledProcessError as e:
     cprint(f"🚨 Terraform plan failed. Error: {e}", attrs=["bold"])
     cprint(e.stderr.decode(), "red")
