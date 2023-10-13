@@ -21,11 +21,11 @@ body:
       description: Please provide any references that are related to your report.
     validations:
       required: false
-  # - type: checkboxes
-  #   id: terms
-  #   attributes:
-  #     label: Code of Conduct
-  #     description: By submitting this report, you agree to follow our [Code of Conduct](CODE_OF_CONDUCT.rst)
-  #     options:
-  #       - label: I agree to follow this project's Code of Conduct
-  #         required: true
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code of Conduct
+      description: By submitting this report, you agree to follow our [Code of Conduct](CODE_OF_CONDUCT.rst)
+      options:
+        - label: I agree to follow this project's Code of Conduct
+          required: true
