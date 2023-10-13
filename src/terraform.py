@@ -95,9 +95,9 @@ def parse_terraform_plan(captured_plan_output_file: str) -> None:
         # Add the resource summary information to the summary table
         summary_table.add_row(
             [
-                colored(resource_type, "green", attrs=["bold"]),
-                colored(resource_name, "green", attrs=["bold"]),
-                colored(f"will be {action}", "green", attrs=["bold"]),
+                colored(resource_type, "green"),
+                colored(resource_name, "green"),
+                colored(f"will be {action}", "green"),
             ]
         )
 
@@ -119,7 +119,7 @@ def parse_terraform_plan(captured_plan_output_file: str) -> None:
 
     # Print the summary and detail tables
     print(summary_table)
-    cprint("\n📝 Checking the resources details.\n", "yellow", attrs=["bold"])
+    cprint("\n📝 Checking known resource details.\n", "yellow", attrs=["bold"])
     print(detail_table)
 
 
