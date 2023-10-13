@@ -6,11 +6,45 @@ from prettytable import PrettyTable, prettytable
 from termcolor import colored, cprint
 
 # Define the paths to the Terraform files and output
-terraform_dir = "/Users/fsavoia/Dev/terra-friend/terraform-samples"
+terraform_dir = "/Users/fsavoia/Dev/terra-friend/terraform-samples/"
 captured_plan_output_file = os.path.join(
     terraform_dir, "terraform_plan_output.txt"
 )
-tf_plan_output_file = f"{terraform_dir}/terraform_plan.tfplan"
+tf_plan_output_file = f"{terraform_dir}terraform_plan.tfplan"
+
+# using try and except, here creates terraform sintaxe check using subprocess
+try:
+    result = subprocess.run(
+        ["terraform", "validate", "-no-color"],
+        cwd=terraform_dir,
+        check=True,
+        capture_output=True,
+    )
+    cprint(
+        "✅ Terraform sintaxe check completed successfully.\n",
+        "green",
+        attrs=["bold"],
+    )
+except subprocess.CalledProcessError as e:
+    cprint(f"🚨 Terraform sintaxe check failed. Error: {e}", attrs=["bold"])
+    cprint(e.stderr.decode(), "red")
+    exit(1)
+
+# using try and except, here creates terraform init using subprocess
+try:
+    result = subprocess.run(
+        ["terraform", "init", "-no-color"],
+        cwd=terraform_dir,
+        check=True,
+        capture_output=True,
+    )
+    cprint(
+        "✅ Terraform init completed successfully.\n", "green", attrs=["bold"]
+    )
+except subprocess.CalledProcessError as e:
+    cprint(f"🚨 Terraform init failed. Error: {e}i", attrs=["bold"])
+    cprint(e.stderr.decode(), "red")
+    exit(1)
 
 # Run the Terraform plan command and save the output to a file
 try:
@@ -28,15 +62,13 @@ try:
         "✅ Terraform plan completed successfully.\n", "green", attrs=["bold"]
     )
 except subprocess.CalledProcessError as e:
-    print(f"Terraform plan failed. Error: {e}")
-    print("Error output:")
-    print(e.stderr.decode())
+    cprint(f"🚨 Terraform plan failed. Error: {e}", attrs=["bold"])
+    cprint(e.stderr.decode(), "red")
     exit(1)
 
 
 # Parse the Terraform plan output and print the resource information
 def parse_terraform_plan(captured_plan_output_file: str) -> None:
-    # Open the file for reading
     with open(captured_plan_output_file, "r") as file:
         plan_output = file.read()
 
@@ -93,12 +125,13 @@ def parse_terraform_plan(captured_plan_output_file: str) -> None:
 
     # Print the summary and detail tables
     print(summary_table)
-    cprint(
-        "\n📝 Checking previously known resources details.\n",
-        "yellow",
-        attrs=["bold"],
-    )
+    cprint("\n📝 Checking the resources details.\n", "yellow", attrs=["bold"])
     print(detail_table)
 
 
 parse_terraform_plan(captured_plan_output_file)
+
+# removing the plan file
+os.remove(tf_plan_output_file)
+# removing the captured plan output file
+os.remove(captured_plan_output_file)
