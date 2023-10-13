@@ -199,3 +199,9 @@ notes.txt
 
 # vscode settings
 settings.json
+
+# terraform samples
+terraform-samples
+
+# Mac temp files
+.DS_Store
