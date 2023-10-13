@@ -20,9 +20,7 @@ try:
         check=True,
         capture_output=True,
     )
-    cprint(
-        "✅ Terraform syntax check completed successfully.\n", attrs=["bold"]
-    )
+    cprint("✅ Terraform syntax check completed successfully.\n")
 except subprocess.CalledProcessError as e:
     cprint(f"🚨 Terraform syntax check failed. Error: {e}", attrs=["bold"])
     cprint(e.stderr.decode(), "red")
@@ -36,7 +34,7 @@ try:
         check=True,
         capture_output=True,
     )
-    cprint("✅ Terraform init completed successfully.\n", attrs=["bold"])
+    cprint("✅ Terraform init completed successfully.\n")
 except subprocess.CalledProcessError as e:
     cprint(f"🚨 Terraform init failed. Error: {e}i", attrs=["bold"])
     cprint(e.stderr.decode(), "red")
@@ -54,7 +52,7 @@ try:
     with open(captured_plan_output_file, "w") as output_file:
         output_file.write(result.stdout.decode())
 
-    cprint("✅ Terraform plan completed successfully.\n", attrs=["bold"])
+    cprint("✅ Terraform plan completed successfully.\n")
 except subprocess.CalledProcessError as e:
     cprint(f"🚨 Terraform plan failed. Error: {e}", attrs=["bold"])
     cprint(e.stderr.decode(), "red")
@@ -119,7 +117,7 @@ def parse_terraform_plan(captured_plan_output_file: str) -> None:
 
     # Print the summary and detail tables
     print(summary_table)
-    cprint("\n📝 Checking known resource details.\n", "yellow", attrs=["bold"])
+    cprint("\n📝 Checking known resource details.\n")
     print(detail_table)
 
 
