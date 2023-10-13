@@ -10,7 +10,6 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from constants import TerraformCommands as tf
 from constants import TerraformSettings as ts
 
-# using try and except, here creates terraform syntax check using subprocess
 try:
     result = subprocess.run(
         tf.VALIDATE.value.split(" "),
@@ -24,7 +23,6 @@ except subprocess.CalledProcessError as e:
     cprint(e.stderr.decode(), "red")
     exit(1)
 
-# using try and except, here creates terraform init using subprocess
 try:
     result = subprocess.run(
         tf.INIT.value.split(" "),
@@ -38,7 +36,6 @@ except subprocess.CalledProcessError as e:
     cprint(e.stderr.decode(), "red")
     exit(1)
 
-# Run the Terraform plan command and save the output to a file
 try:
     result = subprocess.run(
         tf.PLAN.value.split(" "),
@@ -57,25 +54,21 @@ except subprocess.CalledProcessError as e:
     exit(1)
 
 
-# Parse the Terraform plan output and print the resource information
 def parse_terraform_plan(captured_plan_output_file: str) -> None:
     with open(captured_plan_output_file, "r") as file:
         plan_output = file.read()
 
-    # Extract the relevant information using regular expressions
     resource_blocks = re.findall(
         r"# (.*?) will be (created|updated|destroyed)\n([\s\S]+?)(?=#|\Z)",
         plan_output,
     )
 
-    # Create a table to hold the resource summary information
     summary_table = PrettyTable()
     summary_table.field_names = ["Resource type", "Resource name", "Status"]
     summary_table.align["Resource type"] = "l"
     summary_table.align["Resource name"] = "l"
     summary_table.align["Status"] = "l"
 
-    # Create a table to hold the resource detail information
     detail_table = PrettyTable()
     detail_table.field_names = ["Resource name", "Attribute", "Value"]
     detail_table.align["Resource name"] = "l"
@@ -113,7 +106,6 @@ def parse_terraform_plan(captured_plan_output_file: str) -> None:
                     [colored_resource_name, colored_attribute, colored_value]
                 )
 
-    # Print the summary and detail tables
     print(summary_table)
     cprint("\n📝 Checking known resource details.\n")
     print(detail_table)
@@ -121,7 +113,5 @@ def parse_terraform_plan(captured_plan_output_file: str) -> None:
 
 parse_terraform_plan(ts.CAPTURED_PLAN_OUTPUT_FILE.value)
 
-# removing the plan file
 os.remove(ts.TF_PLAN_OUTPUT_FILE.value)
-# removing the captured plan output file
 os.remove(ts.CAPTURED_PLAN_OUTPUT_FILE.value)
