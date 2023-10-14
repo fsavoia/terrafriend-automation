@@ -3,21 +3,25 @@ from enum import Enum
 
 class Menu(Enum):
     WELCOME_MSG = """
-    =================================
-    =    Terrafriend Automation     =
-    =================================
-    """
+=================================
+=    Terrafriend Automation     =
+=================================
+"""
     COLOR_MSG = "green"
 
 
 class TerraformSettings(Enum):
+    """Terraform settings."""
+
     # TODO: this will be deleted in the feature to pass via command line
     TERRAFORM_DIR = "/Users/fsavoia/Dev/terra-friend/terraform-samples/"
-    CAPTURED_PLAN_OUTPUT_FILE = "terraform_plan_output.txt"
+    CAPTURED_PLAN_OUTPUT_FILE = f"{TERRAFORM_DIR}terraform_plan_output.txt"
     TF_PLAN_OUTPUT_FILE = f"{TERRAFORM_DIR}terraform_plan.tfplan"
 
 
 class TerraformCommands(Enum):
+    """Terraform commands to be executed."""
+
     VALIDATE = "terraform validate -no-color"
     INIT = "terraform init -no-color"
     PLAN = f"terraform plan -no-color -out {TerraformSettings.TF_PLAN_OUTPUT_FILE.value}"
