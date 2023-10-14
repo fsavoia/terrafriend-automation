@@ -8,41 +8,39 @@ from constants import TerraformCommands as tf
 from constants import TerraformSettings as ts
 
 
-def terraform_validate() -> subprocess.CompletedProcess:
+def terraform_validate() -> None:
     """Run terraform validate command."""
     try:
-        result = subprocess.run(
-            ["terraform", "validate", "-no-color"],
+        subprocess.run(
+            tf.VALIDATE.value.split(" "),
             cwd=ts.TERRAFORM_DIR.value,
             check=True,
             capture_output=True,
         )
         cprint("✅ Terraform syntax check completed successfully.\n")
-        return result
     except subprocess.CalledProcessError as e:
         cprint(f"🚨 Terraform syntax check failed. Error: {e}", attrs=["bold"])
         cprint(e.stderr.decode(), "red")
         exit(1)
 
 
-def terraform_init() -> subprocess.CompletedProcess[bytes]:
+def terraform_init() -> None:
     """Run terraform init command."""
     try:
-        result = subprocess.run(
+        subprocess.run(
             tf.INIT.value.split(" "),
             cwd=ts.TERRAFORM_DIR.value,
             check=True,
             capture_output=True,
         )
         cprint("✅ Terraform init completed successfully.\n")
-        return result
     except subprocess.CalledProcessError as e:
         cprint(f"🚨 Terraform init failed. Error: {e}i", attrs=["bold"])
         cprint(e.stderr.decode(), "red")
         exit(1)
 
 
-def terraform_plan() -> subprocess.CompletedProcess[bytes]:
+def terraform_plan() -> None:
     """Run terraform plan command."""
     try:
         result = subprocess.run(
@@ -56,7 +54,6 @@ def terraform_plan() -> subprocess.CompletedProcess[bytes]:
             output_file.write(result.stdout.decode())
 
         cprint("✅ Terraform plan completed successfully.\n")
-        return result
     except subprocess.CalledProcessError as e:
         cprint(f"🚨 Terraform plan failed. Error: {e}", attrs=["bold"])
         cprint(e.stderr.decode(), "red")
