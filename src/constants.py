@@ -23,7 +23,7 @@ class TerraformCommands(Enum):
     VALIDATE = "terraform validate -no-color"
     INIT = "terraform init -no-color"
     PLAN = f"terraform plan -no-color -out {TerraformSettings.TF_PLAN_OUTPUT_FILE.value}"
-    # APPLY = f"terraform apply -no-color {TerraformSettings.TF_PLAN_OUTPUT_FILE.value}"
+    APPLY = f"terraform apply -no-color {TerraformSettings.TF_PLAN_OUTPUT_FILE.value}"
     # DESTROY = "terraform destroy -no-color"
     # OUTPUT = "terraform output -no-color"
     # SHOW = "terraform show -no-color"
@@ -51,8 +51,8 @@ class UsageCLIErrors(Enum):
     )
 
 
-class TerraformPlanCLI(Enum):
+class CmdCLI(Enum):
     """Terraform plan CLI constants."""
 
-    CMD_HELP = """Initiates and run 'terraform plan' in a friendly way.
+    START_HELP = """Initiates and run 'terraform apply' in a friendly way.
     For your comfort, the output is parsed and displayed in a nice table."""

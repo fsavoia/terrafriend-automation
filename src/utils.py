@@ -6,7 +6,10 @@ from git.repo.base import Repo
 from termcolor import cprint
 
 from constants import Menu
+from constants import TerraformSettings as ts
 from constants import UsageCLIErrors as uce
+from tf_parser import TerraformParser
+from tf_runner import TerraformRunner
 
 
 def show_app_name() -> None:
@@ -39,9 +42,32 @@ def clone_repo(git) -> str:
         return terra_dir
 
 
-class ErrorHandler:
-    @staticmethod
-    def log_and_exit(error_message: str, error_details: str) -> None:
-        cprint(f"🚨 {error_message}", attrs=["bold"])
-        cprint(error_details, "red")
-        exit(1)
+def should_apply() -> bool:
+    should_apply = input("Do you want to apply the changes? (y/n) ").lower()
+    while True:
+        if should_apply == "y" or should_apply == "yes":
+            return True
+        elif should_apply == "n" or should_apply == "no":
+            cprint("\n👋 See you later!", "green")
+            return False
+        else:
+            should_apply = input(
+                "Do you want to apply the changes? (y/n) "
+            ).lower()
+
+
+def run_tf_flow(terra_dir: str) -> None:
+    terraform_runner = TerraformRunner(terra_dir)
+    terraform_parser = TerraformParser(ts.CAPTURED_PLAN_OUTPUT_FILE.value)
+    terraform_runner.terraform_init()
+    terraform_runner.terraform_validate()
+    terraform_runner.terraform_plan()
+    terraform_parser.parse_terraform_plan()
+
+    if should_apply():
+        terraform_runner.terraform_apply()
+        try:
+            os.remove(f"{terra_dir}/{ts.TF_PLAN_OUTPUT_FILE.value}")
+        except OSError as e:
+            cprint(f"\n🚨 {e}", "red")
+            exit(1)

@@ -5,7 +5,14 @@ from termcolor import cprint
 
 from constants import TerraformCommands as tfc
 from constants import TerraformSettings as tfs
-from utils import ErrorHandler
+
+
+class ErrorHandler:
+    @staticmethod
+    def log_and_exit(error_message: str, error_details: str) -> None:
+        cprint(f"🚨 {error_message}", attrs=["bold"])
+        cprint(error_details, "red")
+        exit(1)
 
 
 @dataclass
@@ -54,3 +61,8 @@ class TerraformRunner:
             ErrorHandler.log_and_exit(
                 f"Terraform plan failed: {e}", e.stderr.decode()
             )
+
+    def terraform_apply(self) -> None:
+        """Run 'terraform apply' command."""
+        self.run_command(tfc.APPLY.value)
+        cprint("✅ Terraform apply completed successfully.\n")

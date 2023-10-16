@@ -4,8 +4,6 @@ from dataclasses import dataclass
 from prettytable import PrettyTable, prettytable
 from termcolor import colored, cprint
 
-from utils import ErrorHandler
-
 
 @dataclass
 class TerraformParser:
@@ -45,6 +43,11 @@ class TerraformParser:
                 plan_output,
             )
 
+            # resource_blocks = re.findall(
+            #     r"# (.*?) will be (created|updated|destroyed)| must be replaced\n([\s\S]+?)(?=#|\Z)",
+            #     plan_output,
+            # )
+
             summary_table = self.create_summary_table()
             detail_table = self.create_detail_table()
 
@@ -82,6 +85,6 @@ class TerraformParser:
             cprint("\n📝 Checking known resource details.\n")
             print(detail_table)
         except Exception as e:
-            ErrorHandler.log_and_exit(
-                f"Error parsing Terraform plan: {e}", str(e)
-            )
+            cprint(f"🚨 Error parsing Terraform plan: {e}", attrs=["bold"])
+            cprint(str(e), "red")
+            exit(1)
