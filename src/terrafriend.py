@@ -21,6 +21,7 @@ from utils import clone_repo, is_valid_cli_argument, show_app_name
 
 
 @click.group
+@click.version_option(version="1.0.0")
 def cli() -> None:
     """The available commands for execution are listed below.
     The primary workflow commands are given first, followed by
