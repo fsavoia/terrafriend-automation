@@ -8,12 +8,12 @@ from constants import TerraformCommands as tf
 from constants import TerraformSettings as ts
 
 
-def terraform_validate() -> None:
+def terraform_validate(terraform_dir: str) -> None:
     """Run terraform validate command."""
     try:
         subprocess.run(
             tf.VALIDATE.value.split(" "),
-            cwd=ts.TERRAFORM_DIR.value,
+            cwd=terraform_dir,
             check=True,
             capture_output=True,
         )
@@ -24,12 +24,12 @@ def terraform_validate() -> None:
         exit(1)
 
 
-def terraform_init() -> None:
+def terraform_init(terraform_dir) -> None:
     """Run terraform init command."""
     try:
         subprocess.run(
             tf.INIT.value.split(" "),
-            cwd=ts.TERRAFORM_DIR.value,
+            cwd=terraform_dir,
             check=True,
             capture_output=True,
         )
@@ -40,12 +40,12 @@ def terraform_init() -> None:
         exit(1)
 
 
-def terraform_plan() -> None:
+def terraform_plan(terraform_dir) -> None:
     """Run terraform plan command."""
     try:
         result = subprocess.run(
             tf.PLAN.value.split(" "),
-            cwd=ts.TERRAFORM_DIR.value,
+            cwd=terraform_dir,
             capture_output=True,
             check=True,
         )

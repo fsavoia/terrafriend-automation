@@ -2,7 +2,7 @@ from enum import Enum
 
 
 class Menu(Enum):
-    WELCOME_MSG = """
+    STARTUP_MSG = """
 =================================
 =    Terrafriend Automation     =
 =================================
@@ -13,10 +13,8 @@ class Menu(Enum):
 class TerraformSettings(Enum):
     """Terraform settings."""
 
-    # TODO: this will be deleted in the feature to pass via command line
-    TERRAFORM_DIR = "/Users/fsavoia/Dev/terra-friend/terraform-samples/"
-    CAPTURED_PLAN_OUTPUT_FILE = f"{TERRAFORM_DIR}terraform_plan_output.txt"
-    TF_PLAN_OUTPUT_FILE = f"{TERRAFORM_DIR}terraform_plan.tfplan"
+    CAPTURED_PLAN_OUTPUT_FILE = "terraform_plan_output.txt"
+    TF_PLAN_OUTPUT_FILE = "terraform_plan.tfplan"
 
 
 class TerraformCommands(Enum):
@@ -25,7 +23,36 @@ class TerraformCommands(Enum):
     VALIDATE = "terraform validate -no-color"
     INIT = "terraform init -no-color"
     PLAN = f"terraform plan -no-color -out {TerraformSettings.TF_PLAN_OUTPUT_FILE.value}"
-    APPLY = f"terraform apply -no-color {TerraformSettings.TF_PLAN_OUTPUT_FILE.value}"
-    DESTROY = "terraform destroy -no-color"
-    OUTPUT = "terraform output -no-color"
-    SHOW = "terraform show -no-color"
+    # APPLY = f"terraform apply -no-color {TerraformSettings.TF_PLAN_OUTPUT_FILE.value}"
+    # DESTROY = "terraform destroy -no-color"
+    # OUTPUT = "terraform output -no-color"
+    # SHOW = "terraform show -no-color"
+
+
+class GlobalCLI(Enum):
+    """Global CLI constants."""
+
+    DIR_OPT = "--terra-dir"
+    DIR_SHORT_OPT = "-d"
+    GIT_OPT = "--git"
+    GIT_SHORT_OPT = "-g"
+    METAVAR_DIR = "<dir>"
+    METAVAR_GIT = "<git>"
+    DIR_HELP = "Full path to terraform directory. Option is mutually exclusive with --git"
+    GIT_HELP = "Git repository for you terraform project. Option is mutually exclusive with --terra-dir"
+
+
+class UsageCLIErrors(Enum):
+    """Usage CLI errors."""
+
+    MISSING_ARGS = "Illegal usage: you must specify at least one of the options '-d' or '-g'."
+    MUTUALLY_EXCLUSIVE = (
+        "Illegal usage: options '-d' and '-g' are mutually exclusive."
+    )
+
+
+class TerraformPlanCLI(Enum):
+    """Terraform plan CLI constants."""
+
+    CMD_HELP = """Initiates and run 'terraform plan' in a friendly way.
+    For your comfort, the output is parsed and displayed in a nice table."""
