@@ -11,16 +11,13 @@ from termcolor import cprint
 from constants import GlobalCLI as gc
 from constants import TerraformPlanCLI as tp
 from constants import TerraformSettings as ts
-from terraform import (
-    parse_terraform_plan,
-    terraform_init,
-    terraform_plan,
-    terraform_validate,
-)
+from tf_parser import TerraformParser
+from tf_runner import TerraformRunner
 from utils import clone_repo, is_valid_cli_argument, show_app_name
 
 
 @click.group
+@click.version_option(version="1.0.0")
 def cli() -> None:
     """The available commands for execution are listed below.
     The primary workflow commands are given first, followed by
@@ -48,11 +45,12 @@ def plan(terra_dir: str, git: str) -> None:
         show_app_name()
         if git:
             terra_dir = clone_repo(git) if git else terra_dir
-
-        terraform_init(terra_dir)
-        terraform_validate(terra_dir)
-        terraform_plan(terra_dir)
-        parse_terraform_plan(ts.CAPTURED_PLAN_OUTPUT_FILE.value)
+        terraform_runner = TerraformRunner(terra_dir)
+        terraform_parser = TerraformParser(ts.CAPTURED_PLAN_OUTPUT_FILE.value)
+        terraform_runner.terraform_init()
+        terraform_runner.terraform_validate()
+        terraform_runner.terraform_plan()
+        terraform_parser.parse_terraform_plan()
 
     try:
         # TODO: only remove in the apply option

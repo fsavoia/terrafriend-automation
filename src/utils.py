@@ -37,3 +37,11 @@ def clone_repo(git) -> str:
     else:
         cprint("\n✅ Git repo cloned successfully.\n")
         return terra_dir
+
+
+class ErrorHandler:
+    @staticmethod
+    def log_and_exit(error_message: str, error_details: str) -> None:
+        cprint(f"🚨 {error_message}", attrs=["bold"])
+        cprint(error_details, "red")
+        exit(1)
