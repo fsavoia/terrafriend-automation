@@ -1,3 +1,7 @@
+# -*- coding: utf-8 -*-
+#
+# Copyright (c) 2023 Felipe Savoia
+#
 from enum import Enum
 
 
