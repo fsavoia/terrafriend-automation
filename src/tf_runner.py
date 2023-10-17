@@ -2,7 +2,6 @@
 #
 # Copyright (c) 2023 Felipe Savoia
 #
-import os
 import subprocess
 from dataclasses import dataclass
 
@@ -71,16 +70,3 @@ class TerraformRunner:
         """Run 'terraform apply' command."""
         self.run_command(tfc.APPLY.value)
         cprint("✅ Terraform apply completed successfully.\n")
-
-    def run_tf_flow(self) -> None:
-        """Run Terraform flow."""
-        self.terraform_init()
-        self.terraform_validate()
-        self.terraform_plan()
-
-        self.terraform_apply()
-        try:
-            os.remove(tfs.CAPTURED_PLAN_OUTPUT_FILE.value)
-        except OSError as e:
-            cprint(f"\n🚨 {e}", "red")
-            exit(1)
