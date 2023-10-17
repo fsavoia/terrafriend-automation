@@ -64,9 +64,9 @@ chmod +x terrafriend.py
 
 ### Usage
 
-1. **plan** Command
+1. **start** Command
 
-Initiates and runs ``terraform plan`` in a user-friendly way. The output is parsed and displayed in a readable table.
+Initiates and runs the entire Terraform workflow in a user-friendly way. The output is parsed and displayed in a readable table.
 
 Options:
 
@@ -76,15 +76,15 @@ Options:
 Example:
 
 ```bash
-./terrafriend.py plan -d /path/to/terraform/project
+./terrafriend.py start -d /path/to/terraform/project
 ```
 
 ### Example Workflow
 
-1. Execute the ``plan`` command:
+1. Execute the ``start`` command:
 
 ```bash
-./terrafriend.py plan -d /path/to/terraform/project
+./terrafriend.py start -d /path/to/terraform/project
 ```
 
 2. Terrafriend will clone the Git repository (if provided) and perform Terraform initialization, validation, and planning.
