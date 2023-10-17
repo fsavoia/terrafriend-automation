@@ -43,17 +43,17 @@ def clone_repo(git) -> str:
 
 
 def should_apply() -> bool:
-    should_apply = input("Do you want to apply the changes? (y/n) ").lower()
     while True:
-        if should_apply == "y" or should_apply == "yes":
+        should_apply = input(
+            "Do you want to apply the changes? (y/n) "
+        ).lower()
+        if should_apply in ("y", "yes"):
             return True
-        elif should_apply == "n" or should_apply == "no":
+        elif should_apply in ("n", "no"):
             cprint("\n👋 See you later!", "green")
             return False
         else:
-            should_apply = input(
-                "Do you want to apply the changes? (y/n) "
-            ).lower()
+            cprint("Invalid input. Please enter 'y' or 'n'.", "red")
 
 
 def run_tf_flow(terra_dir: str) -> None:
