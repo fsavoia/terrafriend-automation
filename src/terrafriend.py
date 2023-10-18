@@ -38,7 +38,22 @@ def cli() -> None:
     default=None,
 )
 def start(terra_dir: str, git: str) -> None:
-    """Initiates and run 'terraform plan' in a friendly way."""
+    """
+    Run the Terraform workflow for the specified Terraform directory.
+
+    Parameters
+    ----------
+    terra_dir : str
+        The path to the Terraform directory to run the workflow for.
+    git : str
+        The URL of the Git repository to clone the Terraform directory from.
+
+    Returns
+    -------
+    None
+        This function does not return anything, but it runs the Terraform workflow
+        and prints the output to the console.
+    """
     if is_valid_cli_argument(terra_dir=terra_dir, git=git):
         show_app_name()
         if git:

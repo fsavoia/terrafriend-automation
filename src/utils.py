@@ -17,6 +17,9 @@ from tf_runner import TerraformRunner
 
 
 def show_app_name() -> None:
+    """
+    Print the name of the application to the console.
+    """
     cprint(
         Menu.STARTUP_MSG.value,
         Menu.COLOR_MSG.value,
@@ -25,6 +28,21 @@ def show_app_name() -> None:
 
 
 def is_valid_cli_argument(terra_dir: str, git: str) -> bool:
+    """
+    Check if the CLI arguments are valid.
+
+    Parameters
+    ----------
+    terra_dir : str
+        The path to the Terraform directory.
+    git : str
+        The URL of the Git repository to clone the Terraform directory from.
+
+    Returns
+    -------
+    bool
+        True if the CLI arguments are valid, False otherwise.
+    """
     if not terra_dir and not git:
         raise click.UsageError(uce.MISSING_ARGS.value)
     elif terra_dir and git:
@@ -33,6 +51,19 @@ def is_valid_cli_argument(terra_dir: str, git: str) -> bool:
 
 
 def clone_repo(git) -> str:
+    """
+    Clone a Git repository.
+
+    Parameters
+    ----------
+    git : str
+        The URL of the Git repository to clone.
+
+    Returns
+    -------
+    str
+        The path to the cloned repository.
+    """
     try:
         cprint(f"🔍 Cloning git repo {git}...", "yellow")
         temp_dir = os.path.join(os.getcwd(), "temp")
@@ -47,6 +78,14 @@ def clone_repo(git) -> str:
 
 
 def should_apply() -> bool:
+    """
+    Prompt the user to apply the changes.
+
+    Returns
+    -------
+    bool
+        True if the user wants to apply the changes, False otherwise.
+    """
     while True:
         should_apply = input(
             "Do you want to apply the changes? (y/n) "
@@ -61,6 +100,14 @@ def should_apply() -> bool:
 
 
 def run_tf_flow(terra_dir: str) -> None:
+    """
+    Run the Terraform workflow.
+
+    Parameters
+    ----------
+    terra_dir : str
+        The path to the Terraform directory to run the workflow for.
+    """
     terraform_runner = TerraformRunner(terra_dir)
     terraform_parser = TerraformParser(ts.CAPTURED_PLAN_OUTPUT_FILE.value)
     terraform_runner.terraform_init()
