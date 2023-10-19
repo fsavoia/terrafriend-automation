@@ -4,6 +4,7 @@
 #
 import re
 from dataclasses import dataclass, field
+from typing import List, Tuple
 
 from prettytable import PrettyTable, prettytable
 from termcolor import colored, cprint
@@ -160,7 +161,9 @@ class TerraformParser:
         with open(self.captured_plan_output_file, "r") as file:
             return file.read()
 
-    def parse_resource_blocks(self, plan_output: str) -> list:
+    def parse_resource_blocks(
+        self, plan_output: str
+    ) -> List[Tuple[str, str, str]]:
         """
         Parse the resource blocks from the Terraform plan output.
 

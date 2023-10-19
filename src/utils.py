@@ -99,7 +99,11 @@ def should_apply() -> bool:
             cprint("Invalid input. Please enter 'y' or 'n'.", "red")
 
 
-def run_tf_flow(terra_dir: str) -> None:
+def run_tf_flow(
+    terra_dir: str,
+    terraform_runner: TerraformRunner,
+    terraform_parser: TerraformParser,
+) -> None:
     """
     Run the Terraform workflow.
 
@@ -107,9 +111,11 @@ def run_tf_flow(terra_dir: str) -> None:
     ----------
     terra_dir : str
         The path to the Terraform directory to run the workflow for.
+    terraform_runner : TerraformRunner
+        The TerraformRunner object to use to run the Terraform workflow.
+    terraform_parser : TerraformParser
+        The TerraformParser object to use to parse the Terraform plan output.
     """
-    terraform_runner = TerraformRunner(terra_dir)
-    terraform_parser = TerraformParser(ts.CAPTURED_PLAN_OUTPUT_FILE.value)
     terraform_runner.terraform_init()
     terraform_runner.terraform_validate()
     terraform_runner.terraform_plan()

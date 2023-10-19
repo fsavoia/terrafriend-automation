@@ -11,6 +11,8 @@ from termcolor import cprint
 from constants import CmdCLI as cmd
 from constants import GlobalCLI as gc
 from constants import TerraformSettings as ts
+from tf_parser import TerraformParser
+from tf_runner import TerraformRunner
 from utils import clone_repo, is_valid_cli_argument, run_tf_flow, show_app_name
 
 
@@ -54,12 +56,14 @@ def start(terra_dir: str, git: str) -> None:
         This function does not return anything, but it runs the Terraform workflow
         and prints the output to the console.
     """
-    if is_valid_cli_argument(terra_dir=terra_dir, git=git):
+    if is_valid_cli_argument(terra_dir, git):
         show_app_name()
         if git:
             terra_dir = clone_repo(git) if git else terra_dir
 
-        run_tf_flow(terra_dir)
+        terraform_runner = TerraformRunner(terra_dir)
+        terraform_parser = TerraformParser(ts.CAPTURED_PLAN_OUTPUT_FILE.value)
+        run_tf_flow(terra_dir, terraform_runner, terraform_parser)
 
         try:
             os.remove(ts.CAPTURED_PLAN_OUTPUT_FILE.value)
