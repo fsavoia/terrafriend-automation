@@ -9,11 +9,11 @@ from git import GitCommandError
 from git.repo.base import Repo
 from termcolor import cprint
 
-from constants import Menu
-from constants import TerraformSettings as ts
-from constants import UsageCLIErrors as uce
-from tf_parser import TerraformParser
-from tf_runner import TerraformRunner
+from src.constants import Menu
+from src.constants import TerraformSettings as ts
+from src.constants import UsageCLIErrors as uce
+from src.tf_parser import TerraformParser
+from src.tf_runner import TerraformRunner
 
 
 def show_app_name() -> None:

@@ -8,12 +8,12 @@ import os
 import click
 from termcolor import cprint
 
-from constants import CmdCLI as cmd
-from constants import GlobalCLI as gc
-from constants import TerraformSettings as ts
-from tf_parser import TerraformParser
-from tf_runner import TerraformRunner
-from utils import clone_repo, is_valid_cli_argument, run_tf_flow, show_app_name
+from src.constants import CmdCLI as cmd
+from src.constants import GlobalCLI as gc
+from src.constants import TerraformSettings as ts
+from src.tf_parser import TerraformParser
+from src.tf_runner import TerraformRunner
+from src.utils import clone_repo, is_valid_cli_argument, run_tf_flow, show_app_name
 
 
 @click.group

@@ -7,8 +7,8 @@ from dataclasses import dataclass
 
 from termcolor import cprint
 
-from constants import TerraformCommands as tfc
-from constants import TerraformSettings as tfs
+from src.constants import TerraformCommands as tfc
+from src.constants import TerraformSettings as tfs
 
 
 class ErrorHandler:
