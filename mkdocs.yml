@@ -1,0 +1,8 @@
+site_name: "Terrafriend"
+
+theme:
+  name: "readthedocs"
+
+plugins:
+  - search
+  - mkdocstrings

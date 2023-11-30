@@ -19,6 +19,7 @@ class TerraformSettings(Enum):
 
     CAPTURED_PLAN_OUTPUT_FILE = "terraform_plan_output.txt"
     TF_PLAN_OUTPUT_FILE = "terraform_plan.tfplan"
+    VERSION = "0.1.0"
 
 
 class TerraformCommands(Enum):
@@ -42,14 +43,14 @@ class GlobalCLI(Enum):
     GIT_SHORT_OPT = "-g"
     METAVAR_DIR = "<dir>"
     METAVAR_GIT = "<git>"
-    DIR_HELP = "Full path to terraform directory. Option is mutually exclusive with --git"
-    GIT_HELP = "Git repository for you terraform project. Option is mutually exclusive with --terra-dir"
+    DIR_HELP = "Full path to terraform directory. Option is mutually exclusive with `--git`"
+    GIT_HELP = "Git repository for you terraform project. Option is mutually exclusive with `--terra-dir`"
 
 
 class UsageCLIErrors(Enum):
     """Usage CLI errors."""
 
-    MISSING_ARGS = "Illegal usage: you must specify at least one of the options '-d' or '-g'."
+    MISSING_ARGS = "Illegal usage: you must specify at least one of the options `-d` or `-g`."
     MUTUALLY_EXCLUSIVE = (
         "Illegal usage: options '-d' and '-g' are mutually exclusive."
     )
@@ -58,5 +59,5 @@ class UsageCLIErrors(Enum):
 class CmdCLI(Enum):
     """Terraform plan CLI constants."""
 
-    START_HELP = """Initiates and run 'terraform apply' in a friendly way.
+    START_HELP = """* Initiates and run `terraform apply` in a friendly way.
     For your comfort, the output is parsed and displayed in a nice table."""
