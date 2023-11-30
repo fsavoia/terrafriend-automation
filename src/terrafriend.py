@@ -77,8 +77,8 @@ def start(terra_dir: str, git: str) -> None:
     Returns
     -------
     None
-        This function does not return anything, but it runs the Terraform workflow
-        and prints the output to the console.
+        This function does not return anything, but it runs the Terraform
+        workflow and prints the output to the console.
     """
     if is_valid_cli_argument(terra_dir, git):
         show_app_name()
