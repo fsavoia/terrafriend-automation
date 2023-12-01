@@ -12,7 +12,7 @@ setup(
     author="Felipe Savoia",
     author_email="felipe@example.com",
     url="https://github.com/felipesavoia/terrafriend",
-    packages=find_packages(),
+    packages=find_packages(exclude=["tests", "docs"]),
     install_requires=install_requires,
     entry_points={
         "console_scripts": [
